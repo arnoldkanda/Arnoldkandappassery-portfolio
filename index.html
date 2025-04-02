@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arnold Soni Kandappassery - Engineering Portfolio</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: sans-serif;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 5px;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Navbar & Title */
+        header {
+            background-color: #262626;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            color: #64ffda;
+        }
+
+        nav {
+            background-color: #262626;
+            display: flex;
+            justify-content: center;
+            padding: 5px 0;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 12px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            font-size: 15px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            background-color: #333;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            /* The arrow */
+            content: "\25BC";
+            /* Down arrow Unicode */
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #262626;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #e0e0e0;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #333;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Sections */
+        .section {
+            padding: 40px 10%;
+            max-width: 80%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .section h2,
+        .section h3 {
+            color: #64ffda;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: #222;
+            padding: 30px 10%;
+            border-radius: 5px;
+        }
+
+        .contact-section a {
+            color: #64ffda;
+            text-decoration: none;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #64ffda;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: none;
+            transition: 0.3s;
+        }
+
+        #backToTop:hover {
+            background-color: #50d3b4;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #262626;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 5%;
+                max-width: 90%;
+            }
+
+            .project {
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+
+        /* Project Specific Styles */
+        .project {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #222;
+            border-radius: 5px;
+        }
+
+        .project h4 {
+            color: #40c4aa;
+            margin-top: 0;
+        }
+
+        .project p {
+            color: #e0e0e0;
+        }
+
+        .project ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        .project img {
+            max-width: 50%;
+            /* Reduced image size */
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="title">Arnold Soni Kandappassery - Engineering Portfolio</h1>
+    </header>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#personal-profile">Personal Profile</a></li>
+            <li><a href="#technical-skills">Technical Skills</a></li>
+            <li class="dropdown">
+                <a href="#projects" class="dropdown-toggle">Projects</a>
+                <div class="dropdown-content">
+                    <a href="#electric-skateboard">Electric Skateboard</a>
+                    <a href="#pneumatic-engine">Pneumatic Engine</a>
+                    <a href="#motor-controller">Motor Controller</a>
+                    <a href="#headphone-tester">Headphone Tester</a>
+                    <a href="#arduino">Arduino Traffic Lights</a>
+                    <a href="#type-racer">Type Racer</a>
+                </div>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="personal-profile" class="section">
+        <h2>Personal Profile</h2>
+        <p>I am an Aerospace Engineering student at South East Technological University (SETU), 
+            currently in my second year of a four year programme. Passionate about aviation and engineering, 
+            I thrive in problem solving environments that require both technical expertise and creativity.
+             I have hands on experience in mechanical design, electronics, circuit implementation, and software development,
+              and have demonstrated the ability to take projects from concept to completion through careful planning, 
+              technical execution, and problem solving. My current project, an Avionic Headphone Tester, 
+              involves circuit design on a stripboard, 
+            reflecting my ability to integrate hardware and software for practical solutions.</p>
+    </section>
+
+    <section id="technical-skills" class="section">
+        <h2>Technical Skills</h2>
+        <ul>
+            <li>
+                <h3>Mechanical Engineering</h3>
+                <ul>
+                    <li>CAD design</li>
+                    <li>Precision machining</li>
+                    <li>Lathe operation</li>
+                    <li>Milling</li>
+                    <li>Mechanical assembly</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Electronics</h3>
+                <ul>
+                    <li>Circuit design</li>
+                    <li>Breadboard prototyping</li>
+                    <li>Stripboard implementation</li>
+                    <li>Op-amp configuration</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Programming</h3>
+                <ul>
+                    <li>Python</li>
+                    <li>Arduino</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Fabrication</h3>
+                <ul>
+                    <li>Laser cutting</li>
+                    <li>Component manufacturing</li>
+                    <li>System integration</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+
+        <div id="mechanical-projects">
+            <h3>Mechanical Engineering & CAD Projects</h3>
+
+            <div class="project" id="electric-skateboard">
+                <h4>Model Electric Tracked Skateboard (Leaving Cert Engineering, 2023)</h4>
+                <p><i>See Appendix A for project images</i></p>
+                <p><b>Technical Skills Applied:</b> CAD design, laser cutting, mechanical assembly, propulsion system integration</p>
+                <p><b>Description:</b> Designed and built a functional model electric tracked skateboard featuring a tracked propulsion system for stability, front-wheel steering for manoeuvrability, and fold down utility handlebars for portability.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Created comprehensive CAD models and technical drawings</li>
+                    <li>Fabricated chassis and structural components</li>
+                    <li>Integrated motor and power system</li>
+                    <li>Assembled and tested the working prototype</li>
+                </ul>
+                <p><b>Outcome:</b> Successfully produced a working prototype demonstrating innovative mobility concepts and mechanical design principles.</p>
+
+                <h5>Appendix A: Model Electric Tracked Skateboard</h5>
+                <p>Project images and CAD Model</p>
+                <p>Figure A.1: Completed Tracked Skateboard Prototype CAD Model</p>
+                <img src=".Html\imgs\lccad.png"
+                    alt="Tracked Skateboard CAD Model">
+                <p>Figure A.2: Completed Tracked Skateboard Prototype</p>
+                <img src=".Html\imgs\lcmod.jpg"
+                    alt="Tracked Skateboard Prototype">
+            </div>
+
+            <div class="project" id="pneumatic-engine">
+                <h4>Pneumatic Air Engine (University Mechanical Project, 2024)</h4>
+                <p><i>See Appendix B for project images</i></p>
+                <p><b>Technical Skills Applied:</b> Precision machining, lathe operation, milling, technical drawing interpretation, mechanical assembly</p>
+                <p><b>Description:</b> Built a functional pneumatic air engine using steel, brass, and aluminium components as part of a university mechanical engineering project.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Interpreted and followed detailed technical drawings</li>
+                    <li>Machined components to precise specifications using lathe and milling equipment</li>
+                    <li>Assembled components into a functional mechanical system</li>
+                    <li>Tested and optimised performance using compressed air</li>
+                </ul>
+                <p><b>Outcome:</b> Produced a fully operational air engine that successfully demonstrated principles of thermodynamics and mechanical motion conversion.</p>
+
+                <h5>Appendix B: Pneumatic Air Engine</h5>
+                <p>Assembly photos and CAD Model</p>
+                <p>Figure B.1: Assembled Pneumatic Engine CAD Model</p>
+                <img src=".Html\imgs\aircad.png"
+                    alt="Pneumatic Engine CAD Model">
+                <p>Figure B.2: Assembled Pneumatic Engine</p>
+                <img src=".Html\imgs\airmod.jpg" alt="Pneumatic Engine">
+            </div>
+        </div>
+
+        <div id="electronics-projects">
+            <h3>Electronics & Avionics Projects</h3>
+
+            <div class="project" id="motor-controller">
+                <h4>Motor Controller for Avionics System (University Avionics Project, 2024)</h4>
+                <p><i>See Appendix C for circuit schematics</i></p>
+                <p><b>Technical Skills Applied:</b> Circuit design, op-amp configuration, potentiometer control, breadboard prototyping</p>
+                <p><b>Description:</b> Developed a specialized motor controller for an avionics system that implements precision speed control and servo-like functionality.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Designed circuit schematic with operational amplifiers</li>
+                    <li>Implemented potentiometer based speed control</li>
+                    <li>Created rotary switch mechanism for servo like operation</li>
+                    <li>Built and tested prototype on breadboard using DC power</li>
+                </ul>
+                <p><b>Outcome:</b> Successfully demonstrated accurate motor control with smooth operation and reliable performance.</p>
+
+                <h5>Appendix C: Motor Controller for Avionics System</h5>
+                <p>Breadboard layout</p>
+                <p>Figure C.1: Circuit Breadboard Design</p>
+                <img src=".Html\imgs\motor.png"
+                    alt="Motor Controller Breadboard">
+            </div>
+
+            <div class="project" id="headphone-tester">
+                <h4>Avionic Headphone Tester (University Avionics Project, 2025 - Ongoing)</h4>
+                <p><i>See Appendix D for circuit design documentation</i></p>
+                <p><b>Technical Skills Applied:</b> Circuit schematic design, signal analysis, stripboard implementation, housing integration</p>
+                <p><b>Description:</b> Currently developing specialized test equipment for avionic headsets that measures signal integrity, noise levels, and compatibility with aviation standards.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Researched aviation headset specifications and requirements</li>
+                    <li>Designed test circuit with appropriate signal generation and measurement capabilities</li>
+                    <li>Created detailed schematic for implementation</li>
+                    <li>Currently building prototype on stripboard</li>
+                </ul>
+                <p><b>Status:</b> In progress, currently at circuit implementation stage with completion expected by mid-2025.</p>
+
+                <h5>Appendix D: Avionic Headphone Tester</h5>
+                <p>Circuit design</p>
+                <p>Figure D.1: System Design Schematic</p>
+                <img src=".Html\imgs\prot.png"
+                    alt="Avionic Headphone Tester Schematic">
+            </div>
+
+            
+
+        <div id="software-projects" >
+            <h3>Software & Programming Projects</h3>
+            <div class="project" id="arduino">
+                <h4>Arduino Traffic Light System (2024)</h4>
+                <p><i>See Appendix E for system layout and code samples</i></p>
+                <p><b>Technical Skills Applied:</b> Arduino programming, breadboard wiring, LED control, push-button interfacing</p>
+                <p><b>Description:</b> Developed a functional pedestrian traffic light system that simulates real-world traffic control with pedestrian crossings.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Programmed Arduino to control sequential light timing</li>
+                    <li>Implemented push button interface for pedestrian crossing requests</li>
+                    <li>Created appropriate timing sequences for vehicle and pedestrian phases</li>
+                    <li>Built working prototype on breadboard with LED indicators</li>
+                </ul>
+                <p><b>Outcome:</b> Produced a fully functional system that accurately models traffic light operations with pedestrian integration.</p>
+
+                <h5>Appendix E: Arduino Traffic Light System</h5>
+                <p>Arduino Code</p>
+                <p>Figure E.1: Arduino Code Example</p>
+                <img src=".Html\imgs\arduino.png"
+                    alt="Arduino Code Example">
+                    <figure>
+                        <figcaption>Figure E.2: Demonstration of the Arduino traffic light system in operation.</figcaption>
+                        <video width="640" height="480" controls>
+                            <source src=".Html\imgs\traff.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                    </figure>
+                </div>
+            </div>
+        </div>
+            <div class="project" id="type-racer">
+                <h4>Python Type Racer Game (Leaving Cert Computer Science, 2023)</h4>
+                <p><b>Technical Skills Applied:</b> Python scripting, file handling (CSV), terminal-based UI design, OS integration</p>
+                <p><b>Description:</b> Created a terminal-based typing speed game with multiple game modes and score tracking capabilities.</p>
+                <p><b>Process & Implementation:</b></p>
+                <ul>
+                    <li>Designed user interface for terminal environment</li>
+                    <li>Implemented typing speed algorithms and calculations</li>
+                    <li>Created score tracking system with CSV file storage</li>
+                    <li>Developed multiple game modes with varying difficulty</li>
+                </ul>
+                <p><b>Outcome:</b> Produced a fully functional game that effectively measures and tracks typing performance.</p>
+            </div>
+            <div class="project" id="Stock Prediction">
+                <h4>Python Stock Prediction Tool (Personal, 2024)</h4>
+                <p><i>See Appendix F for results and code samples</i></p>
+                <p><b>Technical Skills Applied:</b>  Python scripting, time series analysis, data preprocessing, machine learning (GRU neural network), data visualisation, API integration</p>
+                <p><b>Description:</b>Developed a system to predict stock prices using a Gated Recurrent Unit (GRU) neural network, leveraging the Alpha Vantage API for data acquisition and incorporating technical indicators for enhanced prediction accuracy.
+
+                </p>
+                <p><b>Process & Implementation:</b>
+                <ul>
+                    <li>Fetched historical stock data using the Alpha Vantage API</li>
+                    <li>Preprocessed data, including handling missing values, scaling with MinMaxScaler, and calculating Bollinger Bands</li>
+                    <li>Designed, trained, and optimised a GRU neural network model for time series forecasting</li>
+                    <li>Visualised actual vs. predicted prices, Bollinger Bands, and buy/sell signals to evaluate model performance</li>
+                    <li>Implemented a function to predict future prices, incorporating smoothed Bollinger Band updates</li>
+                </ul></p>
+                <p><b>Outcome</b>Created a functional system capable of predicting stock price trends, providing visualisations to aid in understanding potential investment opportunities and risks</p>
+                <h5>Appendix F: Python Stock Predictor</h5>
+                <p>Sample Code</p>
+                <p>Figure F.1: Python Code Example</p>
+                <img src=".Html\imgs\stock.png"
+                    alt="Python Code Example">
+                    <figure>
+                <p>Figure F.2 Result</p>
+                <img src=".Html\imgs\stockgra.png"
+                    alt="result">
+                    <figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <center>
+        <h2>Contact Information</h2>
+        <p>Email: <a href="mailto:arnoldkandappassery@gmail.com">arnoldkandappassery@gmail.com</a></p>
+        <p>Phone: <a href="tel:+353894382574">+353 894382574</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/arnoldsoni" target="_blank">linkedin.com/in/arnoldsoni</a></p>
+    </center>
+    </section>
+    <button id="backToTop" onclick="scrollToTop()">↑ Top</button>
+
+    <footer>
+      <p>Portfolio last updated: February 2025</p>
+      <p>&copy; 2024 Arnold Soni. All rights reserved.</p>
+      
+    </footer>
+    
+    <script>
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    
+      // Show button when scrolling
+      window.onscroll = function() {
+        let button = document.getElementById("backToTop");
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+          button.style.display = "block";
+        } else {
+          button.style.display = "none";
+        }
+      };
+    </script>
