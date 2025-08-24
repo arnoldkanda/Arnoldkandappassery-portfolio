@@ -1,289 +1,1128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnold Soni Kandappassery - Engineering Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arnold Soni Kandappassery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #e8e8e8;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(64, 255, 218, 0.03), transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(76, 210, 169, 0.02), transparent 50%);
+      z-index: -1; pointer-events: none;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+
+    header {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; position: relative;
+    }
+
+    /* Name with northern-lights (aurora) effect */
+    .name {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 600;
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+        white-space: nowrap;
+
+        position: relative;
+        display: inline-block;
+
+  /* layered, soft aurora colors */
+  background: linear-gradient(90deg,
+    rgba(64,255,218,0.95) 10%,
+    rgba(120,255,200,0.90) 60%,
+    rgba(180,255,170,0.87) 80%,
+    rgba(200,255,150,0.85) 100%);
+    
+
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* soft, diffuse glow rather than hard neon */
+        text-shadow:
+            0 0 8px rgba(64,255,218,0.06),
+            0 0 20px rgba(120,150,255,0.04);
+
+        /* slow flowing movement to mimic northern lights */
+        animation: auroraShift 4s linear infinite;
+    }
+
+    /* blurred, diffused aura behind the text to create glow volume */
+    .name::before {
+        content: attr(aria-label);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: -1;
+
+        font-weight: 600;
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        
+        /* reuse the same gradient but larger and blur it to form the glow */
+        background-image: inherit;
+        background-size: 400% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      
+
+        filter: blur(12px) saturate(120%);
+        opacity: 0.6;
+        mix-blend-mode: screen;
+
+        /* even slower drift for the blurred layer */
+        animation: auraDrift 12s ease-in-out infinite;
+    }
+
+    /* gentle slow movement and subtle hue change */
+    @keyframes auroraShift {
+        0%   { background-position: 0% 50%; filter: hue-rotate(0deg) saturate(110%); }
+        25%  { background-position: 50% 30%; filter: hue-rotate(8deg) saturate(120%); }
+        50%  { background-position: 100% 50%; filter: hue-rotate(18deg) saturate(115%); }
+        75%  { background-position: 50% 70%; filter: hue-rotate(8deg) saturate(125%); }
+        100% { background-position: 0% 50%; filter: hue-rotate(0deg) saturate(110%); }
+    }
+
+    @keyframes auraDrift {
+        0%   { background-position: 0% 50%; opacity: 0.55; transform: translate(-50%,-50%) scale(0.99); }
+        50%  { background-position: 50% 30%; opacity: 0.75; transform: translate(-50%,-50%) scale(1.02); }
+        100% { background-position: 100% 50%; opacity: 0.55; transform: translate(-50%,-50%) scale(0.99); }
+    }
+
+    .name .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      margin-left: 4px;
+      background: #40ffda;
+      vertical-align: middle;
+      animation: blink 1s steps(1) infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 0.7; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #999;
+      margin-bottom: 3rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .projects { padding: 6rem 0; }
+    .section-title { font-size: 2rem; font-weight: 500; text-align: center; margin-bottom: 4rem; color: #fff; }
+    .projects-grid { display: grid; gap: 3rem; }
+    .project {
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 16px; padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .project.visible { opacity: 1; transform: translateY(0); }
+    .project:hover { transform: translateY(-4px); border-color: rgba(64, 255, 218, 0.2); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .project h3 { font-size: 1.4rem; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
+    .project-type {
+      font-size: 0.8rem; color: #40ffda; background: rgba(64, 255, 218, 0.1);
+      padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .project p { color: #aaa; font-size: 1rem; margin-bottom: 1.5rem; font-weight: 300; }
+    .project-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+    .project img, .project video {
+      width: 100%; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      object-fit: cover;
+      aspect-ratio: 16/10;
+    }
+    .project img:hover, .project video:hover { 
+      transform: scale(1.02); 
+      border-color: rgba(64, 255, 218, 0.3); 
+    }
+    
+    .project video {
+      background: #000;
+    }
+    /* View Details Button */
+    .view-details-btn {
+      display: inline-block;
+      background: rgba(64, 255, 218, 0.1);
+      border: 1px solid rgba(64, 255, 218, 0.3);
+      color: #40ffda;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 1rem 0;
+    }
+
+    .view-details-btn:hover {
+      background: rgba(64, 255, 218, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(64, 255, 218, 0.1);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: #0a0a0a;
+      margin: 2% auto;
+      width: 95%;
+      max-width: 1200px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      animation: modalSlideIn 0.4s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(90deg,
+        rgba(64,255,218,0.95) 10%,
+        rgba(120,255,200,0.90) 60%,
+        rgba(180,255,170,0.87) 80%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: auroraShift 4s linear infinite;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .close:hover {
+      color: #40ffda;
+      background: rgba(64, 255, 218, 0.1);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 0 2rem 2rem;
+    }
+
+    /* Modal Content Styles */
+    .modal-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-badge {
+      background: rgba(64, 255, 218, 0.1);
+      border: 1px solid rgba(64, 255, 218, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #40ffda;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-section {
+      background: rgba(15, 15, 15, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-section-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #40ffda;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-section-title::before {
+      content: '';
+      width: 3px;
+      height: 18px;
+      background: linear-gradient(135deg, #40ffda, #4cd2a9);
+      border-radius: 2px;
+    }
+
+    .modal-text {
+      color: #aaa;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .process-grid-modal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .process-card-modal {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .process-card-modal:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(64, 255, 218, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .process-number-modal {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(135deg, #40ffda, #4cd2a9);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #0a0a0a;
+      font-size: 1rem;
+    }
+
+    .process-title-modal {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-text-modal {
+      color: #aaa;
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    footer {
+      padding: 4rem 0 2rem; text-align: center; color: #555; font-size: 0.9rem; font-weight: 300;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Custom scrollbar for modal */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+      background: rgba(64, 255, 218, 0.3);
+      border-radius: 10px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb:hover {
+      background: rgba(64, 255, 218, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1rem; }
+      .project { padding: 1.5rem; }
+      .project-header { flex-direction: column; gap: 0.5rem; }
+      .project-images { grid-template-columns: 1fr; }
+      
+      .modal-content {
+        margin: 1% auto;
+        width: 98%;
+        max-height: 95vh;
+      }
+      
+      .modal-header {
+        padding: 1.5rem 1rem 1rem;
+      }
+      
+      .modal-body {
+        padding: 0 1rem 1.5rem;
+      }
+      
+      .modal-section {
+        padding: 1.5rem;
+      }
+      
+      .process-grid-modal {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+    .scroll-hint{
+  position: absolute;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+
+  padding: .8rem 1.15rem;
+  border-radius: 12px;
+  border: 1px solid rgba(64,255,218,.35);
+  background: rgba(64,255,218,.08);
+  color: #40ffda;
+
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  opacity: 0;
+
+  transition:
+    transform .25s cubic-bezier(.16,1,.3,1),
+    box-shadow .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    opacity .6s ease;
+
+  /* enter animation like your cards */
+  animation: scrollFadeUp .9s ease 1.4s forwards, scrollPulse 2.6s ease-in-out infinite;
+}
+
+/* subtle neon-ish glow */
+.scroll-hint:hover{
+  transform: translateX(-50%) translateY(-2px);
+  background: rgba(64,255,218,.14);
+  border-color: rgba(64,255,218,.55);
+  box-shadow:
+    0 8px 24px rgba(64,255,218,.12),
+    inset 0 0 0 1px rgba(64,255,218,.12);
+}
+
+/* keyboard focus ring */
+.scroll-hint:focus-visible{
+  box-shadow:
+    0 0 0 3px rgba(64,255,218,.28),
+    0 8px 24px rgba(64,255,218,.14);
+}
+
+/* arrow icon */
+.scroll-hint::after{
+  content: "↓";
+  font-size: 1.05rem;
+  line-height: 1;
+  opacity: .85;
+  transform: translateY(-1px);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+/* nudge arrow down on hover */
+.scroll-hint:hover::after{
+  transform: translateY(2px);
+  opacity: 1;
+}
+
+/* entrance + gentle breathing */
+@keyframes scrollFadeUp{
+  from{ opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to{ opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes scrollPulse{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(64,255,218,.0); }
+  50%{ box-shadow: 0 0 22px 0 rgba(64,255,218,.12); }
+}
+
+
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container">
+      <h1 class="name" aria-label="Arnold Soni Kandappassery">
+        <span class="typed" data-text="Arnold Soni Kandappassery"></span><span class="cursor" aria-hidden="true"></span>
+      </h1>
+      <p class="title">Aerospace Engineering Student</p>
+      <a class="view-details-btn" 
+   href="mailto:arnoldkandappassery@gmail.com?subject=Request%20for%20CV&body=Hi%20Arnold,%0A%0AI%20came%20across%20your%20portfolio%20site%20and%20would%20like%20to%20request%20a%20copy%20of%20your%20CV.%0A%0AThank%20you!" 
+   target="_blank" 
+   rel="noopener">
+  Request CV
+</a>
 
-    <header>
-        <div class="container">
-            <h1 class="title">Arnold Soni Kandappassery - Engineering Portfolio</h1>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#personal-profile">Personal Profile</a></li>
-                    <li><a href="#technical-skills">Technical Skills</a></li>
-                    <li class="dropdown">
-                        <a href="#projects">Projects</a>
-                        <div class="dropdown-content">
-                            <a href="#electric-skateboard">Electric Skateboard</a>
-                            <a href="#pneumatic-engine">Pneumatic Engine</a>
-                            <a href="#motor-controller">Motor Controller</a>
-                            <a href="#headphone-tester">Headphone Tester</a>
-                            <a href="#arduino">Arduino Traffic Lights</a>
-                            <a href="#type-racer">Type Racer</a>
-                            <a href="#stock">Stock Prediction</a>
-                        </div>
-                    </li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <section id="personal-profile" class="section">
-        <div class="container">
-        <h2>Personal Profile</h2>
-        <p>I am an Aerospace Engineering student at South East Technological University (SETU),
-        currently in my second year of a four year programme. Passionate about aviation and engineering,
-        I thrive in problem solving environments that require both technical expertise and creativity.
-        I have hands on experience in mechanical design, electronics, circuit implementation, and software development,
-        and have demonstrated the ability to take projects from concept to completion through careful planning,
-        technical execution, and problem solving. My current project, an Avionic Headphone Tester,
-        involves circuit design on a stripboard,
-        reflecting my ability to integrate hardware and software for practical solutions.</p>
+      <button class="scroll-hint" type="button" aria-label="Scroll to projects">View Projects</button>
+
+
+    </div>
+  </header>
+
+    <section class="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      
+      <div class="projects-grid">
+        <div class="project">
+          <div class="project-header">
+            <div>
+              <h3>Electric Tracked Skateboard</h3>
+              <div class="project-meta">
+                <span class="project-type">Mechanical</span>
+                <span class="project-date">2023</span>
+              </div>
             </div>
-    </section>
-    
-    <section id="technical-skills" class="section">
-        <div class=" container">
-        <h2>Technical Skills</h2>
-        <ul>
-            <li>
-                <h3>Mechanical Engineering</h3>
-                <ul>
-                    <li>CAD design</li>
-                    <li>Precision machining</li>
-                    <li>Lathe operation</li>
-                    <li>Milling</li>
-                    <li>Mechanical assembly</li>
-                </ul>
-            </li>
-            <li>
-                <h3>Electronics</h3>
-                <ul>
-                    <li>Circuit design</li>
-                    <li>Breadboard prototyping</li>
-                    <li>Stripboard implementation</li>
-                    <li>Op-amp configuration</li>
-                </ul>
-            </li>
-            <li>
-                <h3>Programming</h3>
-                <ul>
-                    <li>Python</li>
-                    <li>Arduino</li>
-                </ul>
-            </li>
-            <li>
-                <h3>Fabrication</h3>
-                <ul>
-                    <li>Laser cutting</li>
-                    <li>Component manufacturing</li>
-                    <li>System integration</li>
-                </ul>
-            </li>
-        </ul>
+          </div>
+          <p> Designed and built a functional model electric tracked skateboard featuring a tracked propulsion system for stability, front-wheel steering for maneuverability, and fold down utility handlebars for portability.</p>
+          
+          <button class="view-details-btn" onclick="openModal('skateboardModal')">
+            View Detailed Project →
+          </button>
+          
+          <div class="project-images">
+            <img src="lccad.png" alt="CAD render of tracked skateboard">
+            <img src="lcmod.jpg" alt="Finished tracked skateboard">
+          </div>
         </div>
-    </section>
 
-    <section id="projects" class="section">
-        <div class="container">
-            <h2>Projects</h2>
-            <div id="mechanical-projects">
-                <h3>Mechanical Engineering & CAD Projects</h3>
-
-                <div class="project" id="electric-skateboard">
-                    <h4>Model Electric Tracked Skateboard (Leaving Cert Engineering, 2023)</h4>
-                    <p><i>See Appendix A for project images</i></p>
-                    <p><b>Technical Skills Applied:</b> CAD design, laser cutting, mechanical assembly, propulsion system integration</p>
-                    <p><b>Description:</b> Designed and built a functional model electric tracked skateboard featuring a tracked propulsion system for stability, front-wheel steering for manoeuvrability, and fold down utility handlebars for portability.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Created comprehensive CAD models and technical drawings</li>
-                        <li>Fabricated chassis and structural components</li>
-                        <li>Integrated motor and power system</li>
-                        <li>Assembled and tested the working prototype</li>
-                    </ul>
-                    <p><b>Outcome:</b> Successfully produced a working prototype demonstrating innovative mobility concepts and mechanical design principles.</p>
-
-                    <h5>Appendix A: Model Electric Tracked Skateboard</h5>
-                    <p>Project images and CAD Model</p>
-                    <p>Figure A.1: Completed Tracked Skateboard Prototype CAD Model</p>
-                    <img src="lccad.png"
-                        alt="Tracked Skateboard CAD Model">
-                    <p>Figure A.2: Completed Tracked Skateboard Prototype</p>
-                    <img src="lcmod.jpg"
-                        alt="Tracked Skateboard Prototype">
-                </div>
-
-                <div class="project" id="pneumatic-engine">
-                    <h4>Pneumatic Air Engine (University Mechanical Project, 2024)</h4>
-                    <p><i>See Appendix B for project images</i></p>
-                    <p><b>Technical Skills Applied:</b> Precision machining, lathe operation, milling, technical drawing interpretation, mechanical assembly</p>
-                    <p><b>Description:</b> Built a functional pneumatic air engine using steel, brass, and aluminium components as part of a university mechanical engineering project.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Interpreted and followed detailed technical drawings</li>
-                        <li>Machined components to precise specifications using lathe and milling equipment</li>
-                        <li>Assembled components into a functional mechanical system</li>
-                        <li>Tested and optimised performance using compressed air</li>
-                    </ul>
-                    <p><b>Outcome:</b> Produced a fully operational air engine that successfully demonstrated principles of thermodynamics and mechanical motion conversion.</p>
-
-                    <h5>Appendix B: Pneumatic Air Engine</h5>
-                    <p>Assembly photos and CAD Model</p>
-                    <p>Figure B.1: Assembled Pneumatic Engine CAD Model</p>
-                    <img src="aircad.png"
-                        alt="Pneumatic Engine CAD Model">
-                    <p>Figure B.2: Assembled Pneumatic Engine</p>
-                    <img src="airmod.jpg" alt="Pneumatic Engine">
-                </div>
+        <div class="project">
+          <div class="project-header">
+            <div>
+              <h3>Pneumatic Air Engine</h3>
+              <div class="project-meta">
+                <span class="project-type">Machining</span>
+                <span class="project-date">2024</span>
+              </div>
             </div>
+          </div>
+          <p>Advanced manufacturing project involving multi-material precision machining to create a functional pneumatic engine from technical drawings. Components machined from steel (cylinder block), brass (flywheel and crankshaft), and aluminum (piston and connecting rod) using manual lathes, milling machines, and drilling equipment.</p>
+          
+          <button class="view-details-btn" onclick="openModal('airEngineModal')">
+            View Detailed Project →
+          </button>
+          
+          <div class="project-images">
+            <img src="aircad.png" alt="CAD model of pneumatic engine">
+            <img src="airmod.jpg" alt="Completed pneumatic engine">
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-header">
+            <div>
+              <h3>Avionic Headphone Tester</h3>
+              <div class="project-meta">
+                <span class="project-type">Electronics</span>
+                <span class="project-date">May 2025</span>
+              </div>
+            </div>
+          </div>
+          <p> Test equipment designed for aviation headphone verification and quality assurance. Features dual-channel op-amp signal conditioning, 10-segment LED bargraph display for real time audio level monitoring, and integrated fuse protection for equipment safety.</p>
+
+          <button class="view-details-btn" onclick="openModal('headphoneModal')">
+            View Detailed Project →
+          </button>
+          
+          <div class="project-images">
+            <img src="prot.png" alt="Circuit schematic for headphone tester">
+            <img src="strip.jpg" alt="PCB layout for headphone tester">
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-header">
+            <div>
+              <h3>Arduino Traffic Light System</h3>
+              <div class="project-meta">
+                <span class="project-type">Embedded</span>
+                <span class="project-date">2024</span>
+              </div>
+            </div>
+          </div>
+          <p>Traffic control system simulating real world pedestrian crossing functionality with dual-direction traffic management. Programmed using Arduino IDE with interrupt driven pedestrian button input, timer based state machine logic, and safety interlocks preventing conflicting light states.</p>
+
+          <button class="view-details-btn" onclick="openModal('arduinoModal')">
+            View Detailed Project →
+          </button>
+          
+          <div class="project-images">
+            <img src="arduino.png" alt="Screenshot of Arduino code">
+            <video controls preload="metadata" aspect-ratio="16:9">
+              <source src="traff.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-header">
+            <div>
+              <h3>Python Stock Predictor</h3>
+              <div class="project-meta">
+                <span class="project-type">ML/AI</span>
+                <span class="project-date">2024</span>
+              </div>
+            </div>
+          </div>
+          <p>Financial prediction system combining deep learning neural networks with technical analysis indicators. Implements Gated Recurrent Unit (GRU) architecture for time series forecasting, trained on historical stock data retrieved via Alpha Vantage API.</p>
+
+          <button class="view-details-btn" onclick="openModal('stockModal')">
+            View Detailed Project →
+          </button>
+          
+          <div class="project-images">
+            <img src="stock.png" alt="Screenshot of Python prediction code">
+            <img src="stockgra.png" alt="Screenshot of Prediction Graph">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for Electric Tracked Skateboard -->
+  <div id="skateboardModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Electric Tracked Skateboard</h2>
+        <span class="close" onclick="closeModal('skateboardModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-badge">Mechanical</span>
+          <span class="modal-badge">2023</span>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Technical Skills Applied</h3>
+          <p class="modal-text">CAD design, Laser Cutting, Mechanical Assembly, Propulsion system integration</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Description</h3>
+          <p class="modal-text">
+            Designed and built a functional model electric tracked skateboard featuring a tracked propulsion system 
+            for stability, front wheel steering for maneuverability, and fold down utility handlebars for portability. 
+            This innovative mobility concept demonstrates advanced mechanical design principles and practical engineering implementation.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Process & Implementation</h3>
+          <div class="process-grid-modal">
+            <div class="process-card-modal">
+              <div class="process-number-modal">1</div>
+              <h4 class="process-title-modal">CAD Design</h4>
+              <p class="process-text-modal">Created comprehensive CAD models and technical drawings using Onshape</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">2</div>
+              <h4 class="process-title-modal">Component Fabrication</h4>
+              <p class="process-text-modal">Fabricated chassis and structural components using laser cutting and precision manufacturing techniques</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">3</div>
+              <h4 class="process-title-modal">System Integration</h4>
+              <p class="process-text-modal">Integrated motor and power system with careful attention to performance</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">4</div>
+              <h4 class="process-title-modal">Testing & Validation</h4>
+              <p class="process-text-modal">Assembled and tested the working prototype to validate design concepts and performance metrics</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Outcome</h3>
+          <p class="modal-text">
+            Successfully produced a working prototype demonstrating innovative mobility concepts and mechanical design principles. 
+            The project showcases advanced engineering skills in CAD design, manufacturing processes, and system integration, 
+            resulting in a functional electric vehicle that combines stability, maneuverability, and portability in a unique tracked configuration.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Pneumatic Air Engine -->
+  <div id="airEngineModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Pneumatic Air Engine</h2>
+        <span class="close" onclick="closeModal('airEngineModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-badge">Machining</span>
+          <span class="modal-badge">2024</span>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Technical Skills Applied</h3>
+          <p class="modal-text">Precision machining, multi-material manufacturing, mechanical assembly, Technical Drawing Interpretation, Quality Control</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Description</h3>
+          <p class="modal-text">
+            Advanced manufacturing project involving multi-material precision machining to create a functional pneumatic engine from technical drawings. 
+            Components machined from steel (cylinder block), brass (Crank and Flywheel), and aluminum (piston and connecting rod) using manual lathes, 
+            milling machines, and drilling equipment. Achieved tolerances within ±0.05mm for critical fits. The assembled engine operates at 2-6 bar pressure, 
+            demonstrating mastery of traditional machining techniques and mechanical assembly for university coursework.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Manufacturing Process</h3>
+          <div class="process-grid-modal">
+            <div class="process-card-modal">
+              <div class="process-number-modal">1</div>
+              <h4 class="process-title-modal">Review of Technical Drawings</h4>
+              <p class="process-text-modal">Analysed technical drawings to understand component specifications and machining requirements</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">2</div>
+              <h4 class="process-title-modal">Precision Machining</h4>
+              <p class="process-text-modal">Machined components using manual lathes, milling machines, and drilling equipment</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">3</div>
+              <h4 class="process-title-modal">Quality Control</h4>
+              <p class="process-text-modal">Measured and verified all critical dimensions and surface finishes to ensure proper fit and function</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">4</div>
+              <h4 class="process-title-modal">Assembly & Testing</h4>
+              <p class="process-text-modal">Assembled engine components and tested operation at 2-6 bar pressure to validate performance</p>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Outcome</h3>
+          <p class="modal-text">
+            Successfully demonstrated mastery of traditional machining techniques and mechanical assembly through the creation of a fully functional 
+            pneumatic engine. The project showcased advanced manufacturing skills, precision measurement techniques, and understanding of 
+            multi-material assembly constraints. The completed engine meets all operational requirements
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Avionic Headphone Tester -->
+  <div id="headphoneModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Avionic Headphone Tester</h2>
+        <span class="close" onclick="closeModal('headphoneModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-badge">Electronics</span>
+          <span class="modal-badge">May 2025</span>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Technical Skills Applied</h3>
+          <p class="modal-text">Circuit design, PCB layout, analog signal processing, op-amp configuration, electronic testing protocols</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Description</h3>
+          <p class="modal-text">
+            Test equipment designed for aviation headphone verification and quality assurance. Features dual-channel op-amp signal conditioning, 
+            10-segment LED bargraph display for real time audio level monitoring, and integrated fuse protection for equipment safety. Built on custom stripboard PCB 
+            with careful signal routing to minimise noise and crosstalk. Includes frequency response testing capabilities and automated pass/fail indicators, 
+            meeting aviation industry standards for headphone testing protocols.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Design & Development Process</h3>
+          <div class="process-grid-modal">
+            <div class="process-card-modal">
+              <div class="process-number-modal">1</div>
+              <h4 class="process-title-modal">Requirements Analysis</h4>
+              <p class="process-text-modal">Analysed aviation headphone testing standards and developed technical requirements for equipment</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">2</div>
+              <h4 class="process-title-modal">Circuit Design</h4>
+              <p class="process-text-modal">Designed dual channel op-amp signal conditioning circuits with integrated LED bargraph displays and safety features</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">3</div>
+              <h4 class="process-title-modal">PCB Implementation</h4>
+              <p class="process-text-modal">Built custom stripboard PCB with optimised signal routing to minimise noise</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">4</div>
+              <h4 class="process-title-modal">Testing & Validation</h4>
+              <p class="process-text-modal">Calibrated and tested equipment</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Outcome</h3>
+          <p class="modal-text">
+            Successfully developed avionic test equipment for headphone verification. 
+            The project demonstrates advanced understanding of analog signal processing, PCB design principles, and aviation industry requirements. 
+            The completed tester provides reliable, accurate testing capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Arduino Traffic Light System -->
+  <div id="arduinoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Arduino Traffic Light System</h2>
+        <span class="close" onclick="closeModal('arduinoModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-badge">Embedded</span>
+          <span class="modal-badge">2024</span>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Technical Skills Applied</h3>
+          <p class="modal-text">Embedded systems programming, Arduino IDE, interrupt handling, state machine design, real time control systems, urban infrastructure simulation</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Description</h3>
+          <p class="modal-text">
+            Traffic control system simulating real world pedestrian crossing functionality with dual-direction traffic management. 
+            Programmed using Arduino IDE with interrupt driven pedestrian button input, timer based state machine logic, and safety interlocks 
+            preventing conflicting light states. Features realistic timing sequences including amber warning phases, pedestrian countdown display.
+            Demonstrates embedded systems programming principles and real time control applications 
+            in urban infrastructure.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">System Architecture</h3>
+          <div class="process-grid-modal">
+            <div class="process-card-modal">
+              <div class="process-number-modal">1</div>
+              <h4 class="process-title-modal">State Machine Design</h4>
+              <p class="process-text-modal">Implemented timer-based state machine logic to manage traffic light sequences and pedestrian crossing phases</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">2</div>
+              <h4 class="process-title-modal">Interrupt System</h4>
+              <p class="process-text-modal">Configured interrupt-driven pedestrian button input with debouncing and priority handling</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">3</div>
+              <h4 class="process-title-modal">Safety Interlocks</h4>
+              <p class="process-text-modal">Programmed safety interlocks to prevent conflicting light states and ensure pedestrian safety</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">4</div>
+              <h4 class="process-title-modal">Real-time Control</h4>
+              <p class="process-text-modal">Implemented realistic timing sequences with amber warnings, countdown displays</p>
+            </div>
+          </div>
+        </div>
+
         
 
-            <div id="electronics-projects">
-
-                <h3>Electronics & Avionics Projects</h3>
-
-                <div class="project" id="motor-controller">
-                    <h4>Motor Controller for Avionics System (University Avionics Project, 2024)</h4>
-                    <p><i>See Appendix C for circuit schematics</i></p>
-                    <p><b>Technical Skills Applied:</b> Circuit design, op-amp configuration, potentiometer control, breadboard prototyping</p>
-                    <p><b>Description:</b> Developed a specialized motor controller for an avionics system that implements precision speed control and servo-like functionality.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Designed circuit schematic with operational amplifiers</li>
-                        <li>Implemented potentiometer based speed control</li>
-                        <li>Created rotary switch mechanism for servo like operation</li>
-                        <li>Built and tested prototype on breadboard using DC power</li>
-                    </ul>
-                    <p><b>Outcome:</b> Successfully demonstrated accurate motor control with smooth operation and reliable performance.</p>
-
-                    <h5>Appendix C: Motor Controller for Avionics System</h5>
-                    <p>Breadboard layout</p>
-                    <p>Figure C.1: Circuit Breadboard Design</p>
-                    <img src="motor.png"
-                        alt="Motor Controller Breadboard">
-                </div>
-
-                <div class="project" id="headphone-tester">
-                    <h4>Avionic Headphone Tester (University Avionics Project, 2025 - Ongoing)</h4>
-                    <p><i>See Appendix D for circuit design documentation</i></p>
-                    <p><b>Technical Skills Applied:</b> Circuit schematic design, signal analysis, stripboard implementation, housing integration</p>
-                    <p><b>Description:</b> Currently developing specialized test equipment for avionic headsets that measures signal integrity, noise levels, and compatibility with aviation standards.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Researched aviation headset specifications and requirements</li>
-                        <li>Designed test circuit with appropriate signal generation and measurement capabilities</li>
-                        <li>Created detailed schematic for implementation</li>
-                        <li>Currently building prototype on stripboard</li>
-                    </ul>
-                    <p><b>Status:</b> In progress, currently at circuit implementation stage with completion expected by mid-2025.</p>
-
-                    <h5>Appendix D: Avionic Headphone Tester</h5>
-                    <p>Circuit design</p>
-                    <p>Figure D.1: System Design Schematic</p>
-                    <img src="prot.png"
-                        alt="Avionic Headphone Tester Schematic">
-                </div>
-
-                
-
-            <div id="software-projects" >
-                <h3>Software & Programming Projects</h3>
-                <div class="project" id="arduino">
-                    <h4>Arduino Traffic Light System (2024)</h4>
-                    <p><i>See Appendix E for system layout and code samples</i></p>
-                    <p><b>Technical Skills Applied:</b> Arduino programming, breadboard wiring, LED control, push-button interfacing</p>
-                    <p><b>Description:</b> Developed a functional pedestrian traffic light system that simulates real-world traffic control with pedestrian crossings.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Programmed Arduino to control sequential light timing</li>
-                        <li>Implemented push button interface for pedestrian crossing requests</li>
-                        <li>Created appropriate timing sequences for vehicle and pedestrian phases</li>
-                        <li>Built working prototype on breadboard with LED indicators</li>
-                    </ul>
-                    <p><b>Outcome:</b> Produced a fully functional system that accurately models traffic light operations with pedestrian integration.</p>
-
-                    <h5>Appendix E: Arduino Traffic Light System</h5>
-                    <p>Arduino Code</p>
-                    <p>Figure E.1: Arduino Code Example</p>
-                    <img src="arduino.png"
-                        alt="Arduino Code Example">
-                        <figure>
-                            <figcaption>Figure E.2: Demonstration of the Arduino traffic light system in operation.</figcaption>
-                            <video width="640" height="480" controls>
-                                <source src="traff.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            
-                        </figure>
-                    </div>
-                </div>
-            </div>
-                <div class="project" id="type-racer">
-                    <h4>Python Type Racer Game (Leaving Cert Computer Science, 2023)</h4>
-                    <p><b>Technical Skills Applied:</b> Python scripting, file handling (CSV), terminal-based UI design, OS integration</p>
-                    <p><b>Description:</b> Created a terminal-based typing speed game with multiple game modes and score tracking capabilities.</p>
-                    <p><b>Process & Implementation:</b></p>
-                    <ul>
-                        <li>Designed user interface for terminal environment</li>
-                        <li>Implemented typing speed algorithms and calculations</li>
-                        <li>Created score tracking system with CSV file storage</li>
-                        <li>Developed multiple game modes with varying difficulty</li>
-                    </ul>
-                    <p><b>Outcome:</b> Produced a fully functional game that effectively measures and tracks typing performance.</p>
-                </div>
-                <div class="project" id="stock">
-                    <h4>Python Stock Prediction Tool (Personal, 2024)</h4>
-                    <p><i>See Appendix F for results and code samples</i></p>
-                    <p><b>Technical Skills Applied:</b>  Python scripting, time series analysis, data preprocessing, machine learning (GRU neural network), data visualisation, API integration</p>
-                    <p><b>Description:</b>Developed a system to predict stock prices using a Gated Recurrent Unit (GRU) neural network, leveraging the Alpha Vantage API for data acquisition and incorporating technical indicators for enhanced prediction accuracy.
-
-                    </p>
-                    <p><b>Process & Implementation:</b>
-                    <ul>
-                        <li>Fetched historical stock data using the Alpha Vantage API</li>
-                        <li>Preprocessed data, including handling missing values, scaling with MinMaxScaler, and calculating Bollinger Bands</li>
-                        <li>Designed, trained, and optimised a GRU neural network model for time series forecasting</li>
-                        <li>Visualised actual vs. predicted prices, Bollinger Bands, and buy/sell signals to evaluate model performance</li>
-                        <li>Implemented a function to predict future prices, incorporating smoothed Bollinger Band updates</li>
-                    </ul></p>
-                    <p><b>Outcome</b>Created a functional system capable of predicting stock price trends, providing visualisations to aid in understanding potential investment opportunities and risks</p>
-                    <h5>Appendix F: Python Stock Predictor</h5>
-                    <p>Sample Code</p>
-                    <p>Figure F.1: Python Code Example</p>
-                    <img src="stock.png"
-                        alt="Python Code Example">
-                        <figure>
-                    <p>Figure F.2 Result</p>
-                    <img src="stockgra.png"
-                        alt="result">
-                        <figure>
-                </div>
-            </div>
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Outcome</h3>
+          <p class="modal-text">
+            Successfully developed an intelligent traffic control system that accurately simulates real-world urban infrastructure operations. 
+            The project demonstrates comprehensive understanding of embedded systems programming, real-time control principles, and safety-critical 
+            system design. The completed system provides reliable traffic management with full pedestrian integration and emergency response capabilities, 
+            showcasing practical applications of embedded systems in urban infrastructure.
+          </p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <section id="contact" class="section contact-section">
-        <center>
-        <h2>Contact Information</h2>
-        <p>Email: <a href="mailto:arnoldkandappassery@gmail.com">arnoldkandappassery@gmail.com</a></p>
-        <p>Phone: <a href="tel:+353894382574">+353 894382574</a></p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/arnoldsoni" target="_blank">linkedin.com/in/arnoldsoni</a></p>
-    </center>
-    </section>
-    <button id="backToTop" onclick="scrollToTop()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
-    </button>
-    <script src="script.js"></script>
+  <!-- Modal for Python Stock Predictor -->
+  <div id="stockModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Python Stock Predictor</h2>
+        <span class="close" onclick="closeModal('stockModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-badge">ML/AI</span>
+          <span class="modal-badge">2024</span>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Technical Skills Applied</h3>
+          <p class="modal-text">Machine learning, deep learning, GRU neural networks, Python programming, financial analysis, API integration, data visualisation, risk management</p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Description</h3>
+          <p class="modal-text">
+            A financial prediction system combining deep learning neural networks with technical analysis indicators. 
+            Implements Gated Recurrent Unit (GRU) architecture for time series forecasting, trained on historical stock data retrieved via Alpha Vantage API. 
+            Features Bollinger Bands technical indicators for volatility analysis, sliding window data preprocessing, and custom loss functions optimised 
+            for financial predictions. Achieved 63% directional accuracy on validation data, with integrated risk management metrics and 
+            real-time prediction visualisation dashboard.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Development Process</h3>
+          <div class="process-grid-modal">
+            <div class="process-card-modal">
+              <div class="process-number-modal">1</div>
+              <h4 class="process-title-modal">Data Collection</h4>
+              <p class="process-text-modal">Integrated Alpha Vantage API for real time historical stock data retrieval with automated data pipeline</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">2</div>
+              <h4 class="process-title-modal">Feature Engineering</h4>
+              <p class="process-text-modal">Implemented Bollinger Bands, sliding window preprocessing, and technical analysis indicators</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">3</div>
+              <h4 class="process-title-modal">Model Development</h4>
+              <p class="process-text-modal">Designed and trained GRU neural network architecture with custom loss functions for financial time series</p>
+            </div>
+            <div class="process-card-modal">
+              <div class="process-number-modal">4</div>
+              <h4 class="process-title-modal">Validation & Deployment</h4>
+              <p class="process-text-modal">Achieved 63% directional accuracy with integrated risk management and real time visualisation dashboard</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="modal-section">
+          <h3 class="modal-section-title">Performance Metrics</h3>
+          <p class="modal-text">
+            Achieved 63% directional accuracy on validation dataset, demonstrating strong predictive capability in volatile financial markets. 
+            The system successfully integrates multiple technical indicators with deep learning approaches, providing comprehensive risk assessment 
+            and trend analysis. Real time visualisation dashboard enables immediate insight into prediction confidence and market dynamics.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">Project Outcome</h3>
+          <p class="modal-text">
+            Successfully developed a comprehensive financial prediction system that combines cutting-edge machine learning with traditional technical analysis. 
+            The project demonstrates advanced skills in deep learning, financial modeling, and real time data processing. The completed system provides 
+            reliable predictive insights with integrated risk management, showcasing practical applications of AI in financial technology and 
+            quantitative analysis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Arnold Soni Kandappassery</p>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal animation for project cards
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => { entry.target.classList.add('visible'); }, index * 100);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.project').forEach(project => observer.observe(project));
+
+    // Typing effect (once only, with delay)
+    (function typeName() {
+      const typed = document.querySelector('.name .typed');
+      if (!typed) return;
+      const full = typed.getAttribute('data-text') || '';
+      let i = 0;
+      const typeSpeed = 85;
+
+      function step() {
+        if (i <= full.length) {
+          typed.textContent = full.slice(0, i++);
+          setTimeout(step, typeSpeed);
+        }
+      }
+
+      // 500ms delay before typing starts
+      setTimeout(step, 500);
+    })();
+
+    // Modal functions
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      
+      // Add animation delay for content
+      setTimeout(() => {
+        modal.querySelector('.modal-content').style.transform = 'translateY(0)';
+        modal.querySelector('.modal-content').style.opacity = '1';
+      }, 10);
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          closeModal(modal.id);
+        }
+      });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const openModal = document.querySelector('.modal[style*="block"]');
+        if (openModal) {
+          closeModal(openModal.id);
+        }
+      }
+    });
+
+  function animatedScrollTo(targetY, duration = 700) {
+  if (!window.requestAnimationFrame) {
+    window.scrollTo(0, targetY);
+    return;
+  }
+
+  const startY = window.pageYOffset;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  function easeInOutCubic(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+  function step(now){
+    const t = Math.min(1, (now - startTime) / duration);
+    const eased = easeInOutCubic(t);
+    window.scrollTo(0, Math.round(startY + distance * eased));
+    if (t < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+// Attach the handler after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.scroll-hint');
+  const target = document.querySelector('.projects');
+  if (!btn || !target) return;
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const offset = 24; // px space from top
+    const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+    const dist = Math.abs(y - window.pageYOffset);
+    const dur  = Math.min(1200, Math.max(350, Math.round(dist * 0.5)));
+
+    animatedScrollTo(y, dur);
+  });
+});
+
+
+  </script>
 </body>
-    <footer>
-        <p>Portfolio last updated: February 2025</p>
-        <p>&copy; 2024 Arnold Soni. All rights reserved.</p>
-    
-    </footer>
+</html>
